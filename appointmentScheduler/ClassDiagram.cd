@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Appointment">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAABAAQAAAAAAAAAQAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Appointment.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DailySchedule" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAABAAAABAAQAAAACQAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>DailySchedule.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Day">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAABAAQAAAIAAAAAAgAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Day.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeSlot" Collapsed="true">
+    <Position X="2.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAEBAAABAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>TimeSlot.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Doctor" Collapsed="true">
+    <Position X="2.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABQAQAAAAAAAIAIAAEAARAAAAAAAAAAAA=</HashCode>
+      <FileName>Doctor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Patient" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Patient.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scheduler" Collapsed="true">
+    <Position X="0.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scheduler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataHandler" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataHandler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="8.83" />
+</ClassDiagram>
