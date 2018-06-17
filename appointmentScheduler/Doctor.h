@@ -11,6 +11,7 @@ public:
 	string specialty;
 public:
 	Doctor();
+	Doctor(string code, string name, string specialty, int age);
 	Doctor(string code, string name, string specialty, int age, DailySchedule schedule);
 	void setSpecialty(string specialty);
 	string getSpecialty() const;

@@ -10,5 +10,6 @@ class Patient : public Person {
 public:
 	Patient();
 	Patient(string code, string name, int age, DailySchedule schedule);
+	Patient(string code, string name, int age);
 };
 

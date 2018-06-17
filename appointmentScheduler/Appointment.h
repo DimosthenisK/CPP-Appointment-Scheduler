@@ -11,10 +11,13 @@ class Appointment {
 public:
 	Appointment();
 	Appointment(Doctor* doctor, Patient* patient);
-	void to_json(json& j, const Appointment& Appointment);
-	void from_json(const json& j, Appointment& Appointment);
+	Appointment(string code, string doctorId, string patientId);
+	string getCode() const;
+	string getDoctorId() const;
+	string getPatientId() const;
 private:
 	string doctorId;
 	string patientId;
+	string code;
 };
 

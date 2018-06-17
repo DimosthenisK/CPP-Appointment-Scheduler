@@ -36,3 +36,11 @@ void Person::setAge(int age) {
 void Person::display() {
 	cout << this->name << endl;
 }
+
+DailySchedule Person::getSchedule() const {
+	return this->schedule;
+}
+
+void Person::setSchedule(DailySchedule schedule) {
+	this->schedule = schedule;
+}

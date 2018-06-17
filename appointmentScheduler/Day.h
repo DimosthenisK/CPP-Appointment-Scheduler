@@ -12,8 +12,8 @@ public:
 	Day();
 	bool isTimeAvailable(string time);
 	Appointment* getAppointmentByTime(string time);
-	void to_json(json& j, const Day& day);
-	void from_json(const json& j, Day& day);
+	vector<TimeSlot> getTimeSlots() const;
+	void setTimeSlots(vector<TimeSlot> times);
 private:
 	vector<TimeSlot> times;
 };

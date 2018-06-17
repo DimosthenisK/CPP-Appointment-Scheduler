@@ -6,6 +6,9 @@ Doctor::Doctor(string code, string name, string specialty, int age, DailySchedul
 	this->specialty = specialty;
 }
 
+Doctor::Doctor(string code, string name, string specialty, int age)
+	: Doctor(code, name, specialty, age, DailySchedule()){}
+
 Doctor::Doctor() {};
 
 void Doctor::setSpecialty(string specialty) {

@@ -8,11 +8,10 @@ using json = nlohmann::json;
 
 class TimeSlot {
 public:
-	void setAppointment(Appointment appointment);
-	bool isAvailable();
 	TimeSlot();
-	void to_json(json& j, const TimeSlot& TimeSlot);
-	void from_json(const json& j, TimeSlot& TimeSlot);
+	Appointment getAppointment() const;
+	void setAppointment(Appointment appointment);
+	bool isAvailable() const;
 private:
 	Appointment appointment;
 	bool available;

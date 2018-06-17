@@ -10,13 +10,39 @@
 using namespace std;
 using json = nlohmann::json;
 
+void showHeader() {
+	cout << "---------------------------------" << endl << endl;
+	cout << "Doctor Appointment Scheduler" << endl << endl;
+	cout << "---------------------------------" << endl << endl;
+}
+
+int showMenu() {
+	showHeader();
+
+	return 0;
+	//cout << "Επιλέξτε ενέργεια: " << endl << endl;
+}
+
 int main() {
 	vector<Doctor*> doctors;
 	vector<Patient*> patients;
 	DataHandler dh = DataHandler(&doctors, &patients);
+	int action;
 	
-	patients[0]->display();
-	doctors[0]->display();
+	if (doctors.empty()) {
+		cout << "No doctors found" << endl;
+	}
+	if (patients.empty()) {
+		cout << "No patients found" << endl;
+	}
+
+	do {
+		//action = showMenu();
+		doctors.push_back(new Doctor("23", "Mparmpamhtsos", "OFTHALMIATROS", 24));
+		action = 0;
+	} while (action != 0);
+
+	dh.save(&doctors, &patients);
 
 	system("PAUSE");
 	return 0;

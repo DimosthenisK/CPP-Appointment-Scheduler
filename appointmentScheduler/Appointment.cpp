@@ -10,5 +10,20 @@ Appointment::Appointment(Doctor* doctor, Patient* patient) {
 	this->patientId = patient->getCode();
 }
 
-void to_json(json& j, const Appointment& Appointment) {}
-void from_json(const json& j, Appointment& Appointment) {}
+Appointment::Appointment(string code, string doctorId, string patientId) {
+	this->code = code;
+	this->doctorId = doctorId;
+	this->patientId = patientId;
+}
+
+string Appointment::getCode() const {
+	return this->code;
+}
+
+string Appointment::getDoctorId() const {
+	return this->doctorId;
+}
+
+string Appointment::getPatientId() const {
+	return this->patientId;
+}

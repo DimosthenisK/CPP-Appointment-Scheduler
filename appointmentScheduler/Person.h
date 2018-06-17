@@ -10,7 +10,10 @@ using json = nlohmann::json;
 class Person {
 public:
 	Person();
+	Person(string code, string name, int age);
 	Person(string code, string name, int age, DailySchedule schedule);
+	DailySchedule getSchedule() const;
+	void setSchedule(DailySchedule schedule);
 	string getName() const;
 	void setName(string name);
 	string getCode() const;

@@ -13,5 +13,6 @@ class DataHandler {
 public:
 	DataHandler();
 	DataHandler(vector<Doctor*> *doctors, vector<Patient*> *patients);
+	void save(vector<Doctor*> *doctors, vector<Patient*> *patients);
 };
 
