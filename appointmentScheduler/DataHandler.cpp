@@ -8,8 +8,15 @@
 void to_json(json& j, const Appointment& appointment) {
 	j = json{
 		{ "doctorId", appointment.getDoctorId() },
-	{ "patientId", appointment.getPatientId() },
-	{ "code", appointment.getCode() },
+		{ "patientId", appointment.getPatientId() },
+		{ "code", appointment.getCode() },
+	};
+}
+void to_json(json& j, const Appointment* appointment) {
+	j = json{
+		{ "doctorId", appointment->getDoctorId() },
+		{ "patientId", appointment->getPatientId() },
+		{ "code", appointment->getCode() },
 	};
 }
 
@@ -35,6 +42,20 @@ void to_json(json& j, const TimeSlot& timeSlot) {
 	}
 }
 
+void to_json(json& j, const TimeSlot* timeSlot) {
+	if (timeSlot->isAvailable()) {
+		j = json{
+			{ "isAvailable", false },
+		{ "appointment", timeSlot->getAppointment() },
+		};
+	}
+	else {
+		j = json{
+			{ "isAvailable", true }
+		};
+	}
+}
+
 void from_json(const json& j, TimeSlot& timeSlot) {
 	if (j.at("isAvailable").get<bool>()) {
 		timeSlot.setAppointment(j.at("appointment").get<Appointment>());
@@ -47,6 +68,12 @@ void to_json(json& j, const Day& day) {
 	};
 }
 
+void to_json(json& j, const Day* day) {
+	j = json{
+		{ "times", day->getTimeSlots() }
+	};
+}
+
 void from_json(const json& j, Day& day) {
 	day.setTimeSlots(j.at("times").get<vector<TimeSlot>>());
 }
@@ -54,6 +81,11 @@ void from_json(const json& j, Day& day) {
 void to_json(json& j, const DailySchedule& dailySchedule) {
 	j = json{
 		{ "days", dailySchedule.getDays() }
+	};
+}
+void to_json(json& j, const DailySchedule* dailySchedule) {
+	j = json{
+		{ "days", dailySchedule->getDays() }
 	};
 }
 
@@ -72,6 +104,15 @@ void to_json(json& j, const Patient& patient) {
 	};
 }
 
+void to_json(json& j, const Patient* patient) {
+	j = json{
+		{ "code", patient->getCode() },
+		{ "name", patient->getName() },
+		{ "age", patient->getAge() },
+		{ "schedule", patient->getSchedule() }
+	};
+}
+
 //tempPatient γιατί διαγραφόντουσταν τα strings όταν έφευγε από το block.
 Patient tempPatient;
 void from_json(const json& j, Patient& patient) {
@@ -82,13 +123,23 @@ void from_json(const json& j, Patient& patient) {
 	tempPatient = patient;
 }
 
+void to_json(json& j, const Doctor* doctor) {
+	j = json{
+		{ "code", doctor->getCode() },
+		{ "name", doctor->getName() },
+		{ "age", doctor->getAge() },
+		{ "specialty", doctor->getSpecialty() },
+		{ "schedule", doctor->getSchedule() }
+	};
+}
+
 void to_json(json& j, const Doctor& doctor) {
 	j = json{
 		{ "code", doctor.getCode() },
-		{ "name", doctor.getName() },
-		{ "age", doctor.getAge() },
-		{ "specialty", doctor.getSpecialty() },
-		{ "schedule", doctor.getSchedule() }
+	{ "name", doctor.getName() },
+	{ "age", doctor.getAge() },
+	{ "specialty", doctor.getSpecialty() },
+	{ "schedule", doctor.getSchedule() }
 	};
 }
 
@@ -136,9 +187,8 @@ void DataHandler::save(vector<Doctor*> *doctors, vector<Patient*> *patients) {
 
 	fs.open("C:/Users/demos/Desktop/scheduledData.json", fstream::out);
 	if (!fs.fail()) {
-
 		
-		json jDoctors = &doctors;
+		//json jDoctors = &doctors;
 		//scheduledData["patients"] = patients;
 
 		fs << scheduledData;
