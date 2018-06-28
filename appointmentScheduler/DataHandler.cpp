@@ -1,5 +1,4 @@
 #include "DataHandler.h"
-#include <typeinfo>
 #pragma region JSON_Methods
 //Διαδικασίες που χρησιμοποιούνται από την βιβλιοθήκη json για γρήγορο parsing μεταξύ
 //custom κλάσεων και δεδομένων json. Η βιβλιοθήκη δεν επιτρέπει να είναι μέλη μιας κλάσης,
@@ -32,7 +31,7 @@ void to_json(json& j, const TimeSlot& timeSlot) {
 	if (timeSlot.isAvailable()) {
 		j = json{
 			{ "isAvailable", false },
-		{ "appointment", timeSlot.getAppointment() },
+			{ "appointment", timeSlot.getAppointment() },
 		};
 	}
 	else {
@@ -46,7 +45,7 @@ void to_json(json& j, const TimeSlot* timeSlot) {
 	if (timeSlot->isAvailable()) {
 		j = json{
 			{ "isAvailable", false },
-		{ "appointment", timeSlot->getAppointment() },
+			{ "appointment", timeSlot->getAppointment() },
 		};
 	}
 	else {
@@ -154,6 +153,7 @@ void from_json(const json& j, Doctor& doctor) {
 	tempDoctor = doctor;
 }
 #pragma endregion
+		
 
 DataHandler::DataHandler(vector<Doctor*> *doctors, vector<Patient*> *patients) {
 	fstream fs;
@@ -175,7 +175,7 @@ DataHandler::DataHandler(vector<Doctor*> *doctors, vector<Patient*> *patients) {
 
 		for (json::iterator patient = patientsJ.begin(); patient != patientsJ.end(); ++patient) {
 			json newPatientJ = patient.value();
-			&newPatientJ.get<Patient>();
+			newPatientJ.get<Patient>();
 			patients->push_back(&tempPatient);
 		}
 	}
@@ -188,8 +188,10 @@ void DataHandler::save(vector<Doctor*> *doctors, vector<Patient*> *patients) {
 	fs.open("C:/Users/demos/Desktop/scheduledData.json", fstream::out);
 	if (!fs.fail()) {
 		
-		json jDoctors = &doctors;
-		//scheduledData["patients"] = patients;
+		json jDoctors = *doctors;
+		json jPatients = *patients;
+		scheduledData["doctors"] = jDoctors;
+		scheduledData["patients"] = jPatients;
 
 		fs << scheduledData;
 		fs.close();

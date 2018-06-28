@@ -23,7 +23,6 @@ public:
 	void display();
 protected:
 	string name;
-	string code;
 	int age;
 	DailySchedule schedule;
 };

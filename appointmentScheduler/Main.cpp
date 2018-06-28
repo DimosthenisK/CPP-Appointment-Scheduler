@@ -5,29 +5,16 @@
 #include "Patient.h"
 #include "Doctor.h"
 #include "DataHandler.h"
+#include "Scheduler.h"
 
 
 using namespace std;
 using json = nlohmann::json;
 
-void showHeader() {
-	cout << "---------------------------------" << endl << endl;
-	cout << "Doctor Appointment Scheduler" << endl << endl;
-	cout << "---------------------------------" << endl << endl;
-}
-
-int showMenu() {
-	showHeader();
-
-	return 0;
-	//cout << "Επιλέξτε ενέργεια: " << endl << endl;
-}
-
 int main() {
 	vector<Doctor*> doctors;
 	vector<Patient*> patients;
 	DataHandler dh = DataHandler(&doctors, &patients);
-	int action;
 	
 	if (doctors.empty()) {
 		cout << "No doctors found" << endl;
@@ -36,11 +23,8 @@ int main() {
 		cout << "No patients found" << endl;
 	}
 
-	do {
-		//action = showMenu();
-		doctors.push_back(new Doctor("23", "Mparmpamhtsos", "OFTHALMIATROS", 24));
-		action = 0;
-	} while (action != 0);
+	doctors.push_back(new Doctor("23", "Mparmpamhtsos", "OFTHALMIATROS", 24));
+	patients.push_back(new Patient("23", "Mparmpagiannhs", 24));
 
 	dh.save(&doctors, &patients);
 
