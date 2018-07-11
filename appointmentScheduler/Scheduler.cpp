@@ -178,6 +178,11 @@ void Scheduler::scheduleOneAppointment() {
 	}
 
 	ds.createAppointment(appointmentDate.str(), wantedTime, doctor, patient);
+	patient->getSchedule().createAppointment(appointmentDate.str(), wantedTime, doctor, patient);
+
+	showHeader("Νέο Ραντεβού");
+	cout << "Επιτυχής καταχώρηση!" << endl;
+	system("pause");
 }
 
 void Scheduler::printDoctorAppointments(Doctor& doctor) {
@@ -226,7 +231,59 @@ void Scheduler::showDoctorAppointments() {
 	printDoctorAppointments(*doctors->at(selection - 1));
 }
 
+void Scheduler::addDoctor() {
+	cin.clear();
+	cin.ignore();
+
+	showHeader("Προσθήκη Ιατρού");
+	array<string, 14> possibleSpecialties = {
+		"AGGEIOLOGOS",
+		"AKTINOLOGOS",
+		"ANDROLOGOS",
+		"GASTRENTEROLOGOS",
+		"GUNAIKOLOGOS",
+		"DERMATOLOGOS",
+		"KARDIOLOGOS",
+		"NEFROLOGOS",
+		"ODONTIATROS",
+		"OUROLOGOS",
+		"PAIDIATROS",
+		"OFTHALMIATROS",
+		"PSUXOLOGOS",
+		"PATHOLOGOS"
+	};
+	string name, code, specialty;
+	int age;
+
+	cout << "Όνομα γιατρού: ";
+	getline(cin, name);
+
+	cout << "Ειδικότητα γιατρού: " << endl;
+	cout << "Υποστηριζόμενες ειδικότητες: ";
+	for (int i = 0; i < possibleSpecialties.size(); i++) {
+		cout << possibleSpecialties[i];
+		if (i != possibleSpecialties.size() - 1) cout << ",";
+		else cout << endl;
+	}
+	cout << "Ειδικότητα: ";
+	getline(cin, specialty);
+	while (find(begin(possibleSpecialties), end(possibleSpecialties), specialty) == end(possibleSpecialties)) {
+		cout << "Παρακαλώ εισάγετε μια υποστηριζόμενη ειδικότητα γιατρού: ";
+		getline(cin, specialty);
+	}
+
+	cout << "Ηλικία Ιατρού: ";
+	cin >> age;
+
+	showHeader("Προσθήκη Ιατρού");
+	doctors->push_back(new Doctor(genCode(4), name, specialty, age));
+	cout << "Επιτυχής καταχώρηση. " << endl;
+
+	system("pause");
+}
+
 void Scheduler::scheduleAllAppointments() {
+	srand(time(NULL));
 	int action = 0;
 	do {
 		showHeader();
@@ -247,7 +304,8 @@ void Scheduler::scheduleAllAppointments() {
 			scheduleOneAppointment();
 			break;
 		case 3:
-
+			addDoctor();
+			break;
 		case 4:
 			showDoctorAppointments();
 			break;

@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <json.h>
+#include <array>
 #include <sstream>
 #include <Doctor.h>
 #include <Patient.h>
@@ -16,6 +17,7 @@ public:
 	void scheduleAllAppointments();
 	void printDoctorAppointments(Doctor& doctor);
 	void showDoctorAppointments();
+	void addDoctor();
 private:
 	void showHeader();
 	void showHeader(string heading);
