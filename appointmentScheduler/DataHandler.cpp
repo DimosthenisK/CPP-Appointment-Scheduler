@@ -155,7 +155,7 @@ void DataHandler::save(vector<Doctor*> *doctors, vector<Patient*> *patients) {
 	fstream fs;
 	json scheduledData;
 
-	fs.open("C:/Users/demos/Desktop/scheduledData.json", fstream::out);
+	fs.open("scheduledData.json", fstream::out);
 	if (!fs.fail()) {
 		
 		json jDoctors = *doctors;
