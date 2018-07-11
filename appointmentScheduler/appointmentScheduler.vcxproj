@@ -120,26 +120,22 @@
     <ClInclude Include="config.h" />
     <ClInclude Include="DailySchedule.h" />
     <ClInclude Include="DataHandler.h" />
-    <ClInclude Include="Day.h" />
     <ClInclude Include="Doctor.h" />
     <ClInclude Include="json.h" />
     <ClInclude Include="Patient.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="Scheduler.h" />
-    <ClInclude Include="TimeSlot.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Appointment.cpp" />
     <ClCompile Include="config.cpp" />
     <ClCompile Include="DailySchedule.cpp" />
     <ClCompile Include="DataHandler.cpp" />
-    <ClCompile Include="Day.cpp" />
     <ClCompile Include="Doctor.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Patient.cpp" />
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="Scheduler.cpp" />
-    <ClCompile Include="TimeSlot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

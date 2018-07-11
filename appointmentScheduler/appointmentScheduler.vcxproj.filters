@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TimeSlot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Doctor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,17 +39,11 @@
     <ClInclude Include="json.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Person.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TimeSlot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Doctor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,9 +66,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="config.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Day.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Person.cpp">

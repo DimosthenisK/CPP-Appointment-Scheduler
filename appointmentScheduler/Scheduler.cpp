@@ -46,10 +46,35 @@ Scheduler::Scheduler(vector<Doctor*>* doctors, vector<Patient*>* patients) {
 }
 
 void Scheduler::printAllAppointments() {
-	
+	showHeader();
+	for (int i = 0; i < doctors->size(); i++) {
+		cout << "Γιατρός: " << doctors->at(i)->getName() << endl;
+		vector<DailySchedule::timeSlot> ds = doctors->at(i)->getSchedule(true).getAppointments();
+		if (ds.size() == 0) cout << "\tΔεν βρέθηκαν ραντεβού." << endl;
+		else {
+			map<string, vector<DailySchedule::timeSlot>> appMap;
+
+			for (int j = 0; j < ds.size(); j++) {
+				appMap[ds[j].date].push_back(ds[j]);
+			}
+
+			for (map<string, vector<DailySchedule::timeSlot>>::iterator it = appMap.begin(); it != appMap.end(); ++it) {
+				cout << "\t" << it->first << endl;
+				for (int k = 0; k < it->second.size(); k++) {
+					cout << "\t\t" << it->second.at(k).time << ": ";
+					for (int l = 0; l < patients->size(); l++) {
+						if (*patients->at(l) == it->second.at(k).appointment.getPatientId()) cout << patients->at(l)->getName();
+					}
+					cout << endl;
+				}
+			}
+		}
+		cout << endl;
+	}
+	system("pause");
 }
 
-Appointment* Scheduler::scheduleOneAppointment() {
+void Scheduler::scheduleOneAppointment() {
 	string buffer;
 	Patient* patient;
 	Doctor* doctor;
@@ -128,17 +153,77 @@ Appointment* Scheduler::scheduleOneAppointment() {
 		cout << "Παρακαλώ εισάγετε μια έγκυρη ημερομηνία για το ραντεβού σας στην μορφη DD-MM-ΥΥΥΥ: " ;
 		cin >> get_time(&t, "%d-%m-%Y");
 	}
-	cout << put_time(&t, "%d-%m-%Y") << endl;
+	stringstream appointmentDate;
+	appointmentDate << put_time(&t, "%d-%m-%Y") << endl;
+
+	cin.clear();
+	cin.ignore();
 	
 	showHeader("Νέο Ραντεβού - Επιλογή ώρας");
 	cout << "Εισάγετε μια από τις παρακάτω διαθέσιμες ώρες: " << endl;
+	
+	DailySchedule& ds = doctor->getSchedule(true);
 
 	for (int i = 0; i < possibleTimes.size(); i++) {
-		//doctor->getSchedule();
+		if (!ds.isAvailableOnDateTime(appointmentDate.str(), possibleTimes.at(i))) continue;
 		cout << possibleTimes.at(i) << endl;
 	}
 
-	return new Appointment();
+	string wantedTime;
+	cout << "Επιθυμητή ώρα: ";
+	getline(cin, wantedTime);
+	while (find(begin(possibleTimes), end(possibleTimes), wantedTime) == end(possibleTimes) || !ds.isAvailableOnDateTime(appointmentDate.str(), wantedTime)) {
+		cout << "Παρακαλώ εισάγετε μια σωστή ώρα για το ραντεβού σας: ";
+		getline(cin, wantedTime);
+	}
+
+	ds.createAppointment(appointmentDate.str(), wantedTime, doctor, patient);
+}
+
+void Scheduler::printDoctorAppointments(Doctor& doctor) {
+	vector<DailySchedule::timeSlot> ds = doctor.getSchedule().getAppointments();
+
+	showHeader();
+
+	cout << "Γιατρός: " << doctor.getName() << endl;
+	if (ds.size() == 0) cout << "\tΔεν βρέθηκαν ραντεβού." << endl;
+	else {
+		map<string, vector<DailySchedule::timeSlot>> appMap;
+
+		for (int j = 0; j < ds.size(); j++) {
+			appMap[ds[j].date].push_back(ds[j]);
+		}
+		for (map<string, vector<DailySchedule::timeSlot>>::iterator it = appMap.begin(); it != appMap.end(); ++it) {
+			cout << "\t" << it->first << endl;
+			for (int k = 0; k < it->second.size(); k++) {
+				cout << "\t\t" << it->second.at(k).time << ": ";
+				for (int l = 0; l < patients->size(); l++) {
+					if (*patients->at(l) == it->second.at(k).appointment.getPatientId()) cout << patients->at(l)->getName();
+				}
+				cout << endl;
+			}
+		}
+	}	
+	system("pause");
+}
+
+void Scheduler::showDoctorAppointments() {
+	int selection;
+	showHeader();
+
+	for (int i = 0; i < doctors->size(); i++) {
+		cout << i + 1 << ". " << doctors->at(i)->getName() << " (" << doctors->at(i)->getSpecialty() << ")" << endl;
+	}
+
+	cout << "Επιλέξτε τον αριθμό Ιατρού: ";
+	cin >> selection;
+
+	while (selection < 1 || selection >> doctors->size()) {
+		cout << "Παρακαλώ εισάγετε έναν σωστό αριθμό Ιατρού: ";
+		cin >> selection;
+	}
+
+	printDoctorAppointments(*doctors->at(selection - 1));
 }
 
 void Scheduler::scheduleAllAppointments() {
@@ -156,11 +241,15 @@ void Scheduler::scheduleAllAppointments() {
 
 		switch (action) {
 		case 1:
+			printAllAppointments();
+			break;
 		case 2:
 			scheduleOneAppointment();
 			break;
 		case 3:
+
 		case 4:
+			showDoctorAppointments();
 			break;
 		}
 
@@ -168,6 +257,7 @@ void Scheduler::scheduleAllAppointments() {
 }
 
 void Scheduler::showHeader() {
+	system("CLS");
 	cout << "---------------------------------" << endl << endl;
 	cout << "Doctor Appointment Scheduler" << endl << endl;
 	cout << "---------------------------------" << endl << endl;

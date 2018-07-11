@@ -27,70 +27,40 @@ void from_json(const json& j, Appointment& appointment) {
 	);
 }
 
-void to_json(json& j, const TimeSlot& timeSlot) {
-	if (timeSlot.isAvailable()) {
-		j = json{
-			{ "isAvailable", false },
-			{ "appointment", timeSlot.getAppointment() },
-		};
-	}
-	else {
-		j = json{
-			{ "isAvailable", true }
-		};
-	}
-}
-
-void to_json(json& j, const TimeSlot* timeSlot) {
-	if (timeSlot->isAvailable()) {
-		j = json{
-			{ "isAvailable", false },
-			{ "appointment", timeSlot->getAppointment() },
-		};
-	}
-	else {
-		j = json{
-			{ "isAvailable", true }
-		};
-	}
-}
-
-void from_json(const json& j, TimeSlot& timeSlot) {
-	if (j.at("isAvailable").get<bool>()) {
-		timeSlot.setAppointment(j.at("appointment").get<Appointment>());
-	}
-}
-
-void to_json(json& j, const Day& day) {
+void to_json(json& j, const DailySchedule::timeSlot& appointment) {
 	j = json{
-		{ "times", day.getTimeSlots() }
+		{ "appointment", appointment.appointment },
+		{ "date" , appointment.date },
+		{ "time" , appointment.time }
 	};
 }
-
-void to_json(json& j, const Day* day) {
+void to_json(json& j, const DailySchedule::timeSlot* appointment) {
 	j = json{
-		{ "times", day->getTimeSlots() }
+		{ "appointment", appointment->appointment },
+		{ "date" , appointment->date },
+		{ "time" , appointment->time }
 	};
 }
-
-void from_json(const json& j, Day& day) {
-	day.setTimeSlots(j.at("times").get<vector<TimeSlot>>());
+void from_json(const json& j, DailySchedule::timeSlot& appointment) {
+	appointment.appointment = j.at("appointment").get<Appointment>();
+	appointment.date = j.at("date").get<string>();
+	appointment.time = j.at("time").get<string>();
 }
 
 void to_json(json& j, const DailySchedule& dailySchedule) {
 	j = json{
-		{ "days", dailySchedule.getDays() }
+		{ "appointments", dailySchedule.getAppointments() }
 	};
 }
 void to_json(json& j, const DailySchedule* dailySchedule) {
 	j = json{
-		{ "days", dailySchedule->getDays() }
+		{ "appointments", dailySchedule->getAppointments() }
 	};
 }
 
 void from_json(const json& j, DailySchedule& dailySchedule) {
-	dailySchedule.setDays(
-		j.at("days").get<vector<Day>>()
+	dailySchedule.setAppointments(
+		j.at("appointments").get<vector<DailySchedule::timeSlot>>()
 	);
 }
 
@@ -135,10 +105,10 @@ void to_json(json& j, const Doctor* doctor) {
 void to_json(json& j, const Doctor& doctor) {
 	j = json{
 		{ "code", doctor.getCode() },
-	{ "name", doctor.getName() },
-	{ "age", doctor.getAge() },
-	{ "specialty", doctor.getSpecialty() },
-	{ "schedule", doctor.getSchedule() }
+		{ "name", doctor.getName() },
+		{ "age", doctor.getAge() },
+		{ "specialty", doctor.getSpecialty() },
+		{ "schedule", doctor.getSchedule() }
 	};
 }
 
@@ -170,13 +140,13 @@ DataHandler::DataHandler(vector<Doctor*> *doctors, vector<Patient*> *patients) {
 		for (json::iterator doctor = doctorsJ.begin(); doctor != doctorsJ.end(); ++doctor) {
 			json newDoctorJ = doctor.value();
 			newDoctorJ.get<Doctor>();
-			doctors->push_back(&tempDoctor);
+			doctors->push_back(new Doctor(tempDoctor));
 		}
 
 		for (json::iterator patient = patientsJ.begin(); patient != patientsJ.end(); ++patient) {
 			json newPatientJ = patient.value();
 			newPatientJ.get<Patient>();
-			patients->push_back(&tempPatient);
+			patients->push_back(new Patient(tempPatient));
 		}
 	}
 }

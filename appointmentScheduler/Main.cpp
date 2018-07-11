@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #include <json.h>
 #include "Patient.h"
 #include "Doctor.h"
@@ -25,12 +26,12 @@ int main() {
 		cout << "No patients found" << endl;
 	}
 
-	sc.scheduleAllAppointments();
-
 	//doctors.push_back(new Doctor("23", "Mparmpamhtsos", "OFTHALMIATROS", 24));
 	//patients.push_back(new Patient("23", "Mparmpagiannhs", 24));
 
-	//dh.save(&doctors, &patients);
+	sc.scheduleAllAppointments();
+
+	dh.save(&doctors, &patients);
 
 	system("PAUSE");
 	return 0;

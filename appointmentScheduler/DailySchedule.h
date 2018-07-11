@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include <Day.h>
+#include <Appointment.h>
+#include <iostream>
 #include <json.h>
 
 using namespace std;
@@ -14,11 +15,10 @@ public:
 		string date;
 		string time;
 	};
-	vector<Day> getAppointments() const;
-	void setDays(vector<timeSlot> appointments);
+	vector<timeSlot> getAppointments() const;
+	void setAppointments(vector<timeSlot> appointments);
 	bool isAvailableOnDateTime(string date, string time);
-	Appointment getAppointmentByDateTime(string date, string time);
-	void createAppointment(string date, string time);
+	void createAppointment(string date, string time, Doctor* doctor, Patient* patient);
 private:
 	vector<timeSlot> appointments;
 };

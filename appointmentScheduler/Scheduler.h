@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <json.h>
+#include <sstream>
 #include <Doctor.h>
 #include <Patient.h>
 #include <iomanip>
@@ -11,8 +12,10 @@ class Scheduler {
 public:
 	Scheduler(vector<Doctor*> *doctors, vector<Patient*> *patients);
 	void printAllAppointments();
-	Appointment* scheduleOneAppointment();
+	void scheduleOneAppointment();
 	void scheduleAllAppointments();
+	void printDoctorAppointments(Doctor& doctor);
+	void showDoctorAppointments();
 private:
 	void showHeader();
 	void showHeader(string heading);

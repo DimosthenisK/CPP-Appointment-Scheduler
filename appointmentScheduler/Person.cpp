@@ -41,6 +41,10 @@ DailySchedule Person::getSchedule() const {
 	return this->schedule;
 }
 
+DailySchedule& Person::getSchedule(bool returnPtr) {
+	return this->schedule;
+}
+
 void Person::setSchedule(DailySchedule schedule) {
 	this->schedule = schedule;
 }
