@@ -9,12 +9,17 @@ using json = nlohmann::json;
 class DailySchedule {
 public:
 	DailySchedule();
-	vector<Day> getDays() const;
-	void setDays(vector<Day> days);
+	struct timeSlot {
+		Appointment appointment;
+		string date;
+		string time;
+	};
+	vector<Day> getAppointments() const;
+	void setDays(vector<timeSlot> appointments);
 	bool isAvailableOnDateTime(string date, string time);
 	Appointment getAppointmentByDateTime(string date, string time);
 	void createAppointment(string date, string time);
 private:
-	vector<Day> days;
+	vector<timeSlot> appointments;
 };
 

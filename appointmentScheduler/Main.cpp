@@ -15,6 +15,8 @@ int main() {
 	vector<Doctor*> doctors;
 	vector<Patient*> patients;
 	DataHandler dh = DataHandler(&doctors, &patients);
+	Scheduler sc = Scheduler(&doctors, &patients);
+	system("chcp 1253");
 	
 	if (doctors.empty()) {
 		cout << "No doctors found" << endl;
@@ -23,10 +25,12 @@ int main() {
 		cout << "No patients found" << endl;
 	}
 
-	doctors.push_back(new Doctor("23", "Mparmpamhtsos", "OFTHALMIATROS", 24));
-	patients.push_back(new Patient("23", "Mparmpagiannhs", 24));
+	sc.scheduleAllAppointments();
 
-	dh.save(&doctors, &patients);
+	//doctors.push_back(new Doctor("23", "Mparmpamhtsos", "OFTHALMIATROS", 24));
+	//patients.push_back(new Patient("23", "Mparmpagiannhs", 24));
+
+	//dh.save(&doctors, &patients);
 
 	system("PAUSE");
 	return 0;

@@ -55,13 +55,13 @@ Appointment* Scheduler::scheduleOneAppointment() {
 	Doctor* doctor;
 	showHeader("Νέο Ραντεβού");
 
-	cout << "Έχετε ξαναχρησιμοποιήσει αυτήν την εφαρμογή? (Y/Yes/yes/N/No/no)";
+	cout << "Έχετε ξαναχρησιμοποιήσει αυτήν την εφαρμογή? (Y/Yes/yes/N/No/no) ";
 	cin >> buffer;
 	while (
 		buffer != "Y" && buffer != "Yes" && buffer != "yes" &&
 		buffer != "N" && buffer != "No"  && buffer != "no") {
 		cout << "Λάθος είσοδος. Παρακαλώ εισάγετε κάτι μεταξύ Y/Yes/yes για ναι, ή N/No/no για όχι.";
-		cout << "Έχετε ξαναχρησιμοποιήσει αυτήν την εφαρμογή? (Y/Yes/yes/N/No/no)";
+		cout << "Έχετε ξαναχρησιμοποιήσει αυτήν την εφαρμογή? (Y/Yes/yes/N/No/no) ";
 		cin >> buffer;
 	}
 
@@ -69,12 +69,12 @@ Appointment* Scheduler::scheduleOneAppointment() {
 
 	if (buffer == "Y" || buffer == "Yes" || buffer == "yes") {
 		int selection;
-		cout << "Επιλέξτε τον αριθμό ασθενή σας: " << endl;
 
 		for (int i = 0; i < patients->size(); i++) {
-			cout << i + 1 << ". " << patients->at(i)->getName();
+			cout << i + 1 << ". " << patients->at(i)->getName() << endl;
 		}
 
+		cout << "Επιλέξτε τον αριθμό ασθενή σας: ";
 		cin >> selection;
 
 		while (selection < 1 || selection >> patients->size()) {
@@ -89,7 +89,9 @@ Appointment* Scheduler::scheduleOneAppointment() {
 		string code = genCode(4);
 		int age;
 		cout << "Εισαγωγή ονόματος ασθενή: ";
-		cin >> name;
+		cin.clear();
+		cin.ignore();
+		getline(cin, name);
 		cout << "Εισαγωγή ηλικίας: ";
 		cin >> age;
 
@@ -100,12 +102,12 @@ Appointment* Scheduler::scheduleOneAppointment() {
 	showHeader("Νέο Ραντεβού - Επιλογή Ιατρού");
 
 	int selection;
-	cout << "Επιλέξτε τον αριθμό Ιατρού σας: " << endl;
 
 	for (int i = 0; i < doctors->size(); i++) {
-		cout << i + 1 << ". " << doctors->at(i)->getName() << " (" << doctors->at(i)->getSpecialty << ")" << endl;
+		cout << i + 1 << ". " << doctors->at(i)->getName() << " (" << doctors->at(i)->getSpecialty() << ")" << endl;
 	}
 
+	cout << "Επιλέξτε τον αριθμό Ιατρού σας: ";
 	cin >> selection;
 
 	while (selection < 1 || selection >> doctors->size()) {
@@ -114,6 +116,29 @@ Appointment* Scheduler::scheduleOneAppointment() {
 	}
 
 	doctor = doctors->at(selection - 1);
+
+	showHeader("Νέο Ραντεβού - Επιλογή ημερομηνίας");
+	cout << "Εισάγετε την επιθυμητή ημερομηνία του ραντεβού σας στην μορφη DD-MM-ΥΥΥΥ: " ;
+	tm t = {};
+	cin >> get_time(&t, "%d-%m-%Y");
+	while (cin.fail()) {
+		cin.clear();
+		cin.ignore();
+
+		cout << "Παρακαλώ εισάγετε μια έγκυρη ημερομηνία για το ραντεβού σας στην μορφη DD-MM-ΥΥΥΥ: " ;
+		cin >> get_time(&t, "%d-%m-%Y");
+	}
+	cout << put_time(&t, "%d-%m-%Y") << endl;
+	
+	showHeader("Νέο Ραντεβού - Επιλογή ώρας");
+	cout << "Εισάγετε μια από τις παρακάτω διαθέσιμες ώρες: " << endl;
+
+	for (int i = 0; i < possibleTimes.size(); i++) {
+		//doctor->getSchedule();
+		cout << possibleTimes.at(i) << endl;
+	}
+
+	return new Appointment();
 }
 
 void Scheduler::scheduleAllAppointments() {
@@ -133,8 +158,10 @@ void Scheduler::scheduleAllAppointments() {
 		case 1:
 		case 2:
 			scheduleOneAppointment();
+			break;
 		case 3:
 		case 4:
+			break;
 		}
 
 	} while (action != 5);

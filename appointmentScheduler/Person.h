@@ -22,6 +22,7 @@ public:
 	void setAge(int age);
 	void display();
 protected:
+	string code;
 	string name;
 	int age;
 	DailySchedule schedule;
